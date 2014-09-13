@@ -1,0 +1,10 @@
+---
+- program: summax.exe
+  tests:
+    "2\r\n 0 0\r\n": "0\n0\n"
+    "4\n 100 1000 -100 -1000\n": "0\n1001\n"
+
+- program: ./summax.exe
+  tests:
+    "2\n 5 6\n": "11\n6\n"
+
