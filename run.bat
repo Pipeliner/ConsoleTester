@@ -7,4 +7,4 @@ POPD
 SET PATH=%RUBY_BIN%;%PATH%
 SET RUBY_BIN=
 
-ruby.exe -v
+ruby.exe tester.rb

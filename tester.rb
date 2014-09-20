@@ -1,17 +1,26 @@
 require 'yaml'
 require 'processpilot/processpilot'
-puts "type 'all' to run all tests, 'exit' to exit, or 'program123' to run tests on program123"
+require 'fileutils'
+ROOT = File.absolute_path(File.dirname __FILE__)
+puts ROOT
+puts "type 'all' to run all tests, 'exit' to exit, 'cd dir' for FS navigation or 'program123' to run tests on program123"
 while true
   print "> "
-  ans = gets.chop
+  ans = gets.chomp
   exit if ans == "exit"
   run_all = (ans == "all")
+  p ans[0,3]
+  if ans[0,3] == "cd "
+    FileUtils.chdir ans[3,100]
+    puts "Now at #{FileUtils.pwd}"
+    next
+  end
 
   progs = YAML.load_file "test.yaml"
   progs.each do |prog|
     pn = prog["program"]
     # TODO: make compiler run configurable
-    `#{File.dirname(__FILE__) + "/FPC2.6.4/bin/i386-win32/fpc.exe"} #{pn.sub ".exe", ".pas"}`
+    `#{ROOT + "/FPC2.6.4/bin/i386-win32/fpc.exe"} #{pn.sub ".exe", ".pas"}`
     next if !run_all && pn != ans
     puts "running #{prog}..."
     tc = 0
